@@ -24,12 +24,12 @@ Node(Point TopLeftPoint, Point BottomRightPoint)
         return TopLeftNode != NULL;
     }
 
-    bool InBound(GameObject object)
+    bool InBound(GameObject *object)
     {
-        return(object.get_x() <= BottomRightPoint_.x_
-               && object.get_x() >= TopLeftPoint_.x_
-               && object.get_y() >= BottomRightPoint_.x_
-               && object.get_y() <= TopLeftPoint_.y_
+        return(object->get_x() <= BottomRightPoint_.x_
+               && object->get_x() >= TopLeftPoint_.x_
+               && object->get_y() >= BottomRightPoint_.x_
+               && object->get_y() <= TopLeftPoint_.y_
             );
     }
 
@@ -38,6 +38,11 @@ Node(Point TopLeftPoint, Point BottomRightPoint)
         return (parent_ == NULL);
     }
 
+    int NumOfObjects() const
+    {
+        return this->Objects.size();
+    }
+    
     
     const Node * const parent() const
     {
@@ -59,15 +64,12 @@ Node(Point TopLeftPoint, Point BottomRightPoint)
 
     ~Node()
     {
-        delete this->TopLeftNode;
-        delete this->TopRightNode;
-        delete this->BottomLeftNode;
-        delete this->BottomRightNode;
+        delete TopLeftNode;
+        delete TopRightNode;
+        delete BottomLeftNode;
+        delete BottomRightNode;
     }
  
-    
-    
-
     
 public:
     Point TopLeftPoint_;
@@ -77,7 +79,7 @@ public:
     Node * TopRightNode;
     Node * BottomLeftNode;
     Node * BottomRightNode;
-    std::vector<GameObject> Objects;
+    std::vector<GameObject *> Objects;
 };
     
 //-----------------------------------------------------//
