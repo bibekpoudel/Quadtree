@@ -7,8 +7,8 @@
 class Node
 {
 public:
-Node(Point TopLeftPoint, Point BottomRightPoint)
-    :TopLeftPoint_(TopLeftPoint), BottomRightPoint_(BottomRightPoint)
+Node(Point TopLeftPoint, Point BottomRightPoint, Node * parent, int level)
+    :TopLeftPoint_(TopLeftPoint), BottomRightPoint_(BottomRightPoint), parent_(parent), level_(level)
     {
         
     TopLeftNode = NULL;
@@ -16,7 +16,7 @@ Node(Point TopLeftPoint, Point BottomRightPoint)
     BottomLeftNode = NULL;
     BottomRightNode = NULL;
     parent_ = NULL;
-    
+    level_ = 0;
     }
     
     bool HasChildren()
@@ -79,6 +79,7 @@ public:
     Node * TopRightNode;
     Node * BottomLeftNode;
     Node * BottomRightNode;
+    int level_;
     std::vector<GameObject *> Objects;
 };
     

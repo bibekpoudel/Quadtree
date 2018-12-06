@@ -7,7 +7,7 @@
 class GameObject
 {
 public:
-GameObject(int x, int y, int r,  int vspeed, int hspeed, int R, int G, int B, Surface & surface)
+GameObject(double x, double y, double r,  double vspeed, double hspeed, int R, int G, int B, Surface & surface)
     : x_(x), y_(y),r_(r),vspeed_(vspeed), hspeed_(hspeed), R_(R), G_(G), B_(B), surface_(surface)
     {
         alive = 1;
@@ -27,7 +27,14 @@ GameObject(int x, int y, int r,  int vspeed, int hspeed, int R, int G, int B, Su
             hspeed_ = -hspeed_;
         }
     }
-   
+
+    void change_color()
+    {
+        R_ = 0;
+        G_ = 0;
+        B_ = 255;
+    }
+    
     int get_x()
     {
         return x_;
@@ -42,8 +49,9 @@ GameObject(int x, int y, int r,  int vspeed, int hspeed, int R, int G, int B, Su
         surface_.put_circle(x_, y_, r_,R_, G_, B_);
     }
     
-private:
-    int x_,y_,r_, vspeed_, hspeed_,R_,G_,B_;
+public:
+    double x_,y_,r_, vspeed_, hspeed_;
+    int R_,G_,B_;
     Surface & surface_;
     bool alive;
     
