@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "gameobject.h"
+//#include <iostream>
 //------------------------QUAD NODE CLASS---------------//
 class Node
 {
@@ -16,23 +17,32 @@ Node(Point TopLeftPoint, Point BottomRightPoint, Node * parent, int level)
     BottomLeftNode = NULL;
     BottomRightNode = NULL;
     parent_ = NULL;
-    level_ = 0;
     }
     
     bool HasChildren()
     {
-        return TopLeftNode != NULL;
+        return (TopLeftNode != NULL);
     }
 
     bool InBound(GameObject *object)
     {
+
+        /* std::cout << "Object x: " << object->get_x()  <<  " Object y:" << object->get_y() << '\n'; */
+       
+        /* std::cout << "Node BRP: " << BottomRightPoint_.x_ << ", " << BottomRightPoint_.y_ << '\n'; */
+        /* std::cout << "Node TLP: " << TopLeftPoint_.x_ << ", " << TopLeftPoint_.y_ << '\n'; */
+        /* std::cout << "In Bound: " << (object->get_x() <= BottomRightPoint_.x_ */
+        /*        && object->get_x() >= TopLeftPoint_.x_ */
+        /*        && object->get_y() >= TopLeftPoint_.y_ */
+        /*        && object->get_y() <= BottomRightPoint_.y_ */
+        /*     ) << '\n'; */
         return(object->get_x() <= BottomRightPoint_.x_
                && object->get_x() >= TopLeftPoint_.x_
-               && object->get_y() >= BottomRightPoint_.x_
-               && object->get_y() <= TopLeftPoint_.y_
+               && object->get_y() >= TopLeftPoint_.y_
+               && object->get_y() <= BottomRightPoint_.y_
             );
     }
-
+    
     bool is_root() const
     {
         return (parent_ == NULL);
@@ -82,7 +92,24 @@ public:
     int level_;
     std::vector<GameObject *> Objects;
 };
-    
+
+
+
+std::ostream & operator<<(std::ostream & cout, const Node &node)
+{
+    cout << "Node: " << &node /* << " " << "TopLeftPoint: " << node->TopLeftPoint_.x_ */
+    /*      << " , " << node->TopLeftPoint_.y_ << '\n' */
+    /*      << " BottomRightPoint:"  << node->BottomRightPoint_.x_ */
+    /*      << " , " << node->BottomRightPoint_.y_ << '\n'; */
+    /* for(int i = 0; i < node->Objects.size(); ++i) */
+    /* { */
+    /*     cout << *node->Objects[i] << ", "; */
+    /* } */
+    /* cout << */<< '\n';
+    return cout;
+}
+
+
 //-----------------------------------------------------//
 #endif
 //num of children

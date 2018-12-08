@@ -22,37 +22,88 @@
 void Game()
 {
     srand((unsigned int) time(NULL));
-    const int NUM_OBJECT = 50;
+    const int NUM_OBJECT = 20;
     Event event;
     Surface surface;
-    Node * root = new Node (Point(0,0), Point(640,480), NULL, 0);
-    QuadTree Quad(root, 5, 6);
 
+
+    std::vector<GameObject *> object;
     for(int i = 0; i < NUM_OBJECT; ++i)
     {
-        Quad.insert(GameObject(rand() % W, rand() % H, 2, rand() % 8 + 2, rand() % 8 + 2, 255, 0, 0, surface));
+        object.push_back(new GameObject(rand() % W, rand() % H, 5, rand() % 8 + 2, rand() % 8 + 2, 255, 0, 0, surface));
     }
+    // std::vector< std::vector< GameObject* > > CollidingPairs = qtree.get_colliding_pairs(object);
+
+   
+// std::cout << root << '\n';
+    // // std::vector<GameObject> object;
+    // // for(int i = 0; i < 50; ++i)
+    // // {
+    // //     object.push_back();
+    // // }
+    
+    // for(int i = 0; i < NUM_OBJECT; ++i)
+    // {
+    //     Quad.insert(GameObject(rand() % W, rand() % H, 2, rand() % 8 + 2, rand() % 8 + 2, 255, 0, 0, surface));
+    // }
+
+  
 
     while(1)
     {
-        
-        
-         if(event.poll())
-         {
-             if(event.type() == QUIT)
-             {
-                 break;
-             }
-         }
+     
+        QuadTree qtree;
+     
+        std::vector< GameObject* > CollidingPairs = qtree.get_colliding_pairs(object);
+        std::cout << &qtree << "a" << '\n';
+     
+       
+          if(event.poll())
+          {
+              if(event.type() == QUIT)
+              {
+                  break;
+              }
+          }
+         
+          for(int i = 0; i < object.size(); ++i)
+          {
+              object[i]->move();
+          }
+
+          for(int i = 0; i < CollidingPairs.size(); ++i)
+          {
+              CollidingPairs[i]->change_color();
+          }
+          
          
          
-         Quad.MoveObjects();
-         
+    //      Quad.MoveObjects();
+    //      // for(int i = 0; i < object.size(); ++i)
+    //      // {
+    //      //     object[i].move();
+    //      // }
          surface.lock();
          surface.fill(BLACK);
          
-         Quad.DrawObjects();
-        
+     
+         // std::cout << root->Objects.size() << '\n';
+         for(int i = 0; i < object.size(); ++i)
+         {
+             object[i]->draw();
+             // std::cout << "---------------\n";
+             // std::cout << object[i] << '\n';
+             // std::cout << "Object: " << *object[i];
+         }
+          // for(int i = 0; i < CollidingPairs.size(); ++i)
+          // {
+          //     CollidingPairs[i]->draw();
+              
+          //    // std::cout << "Drawing---------------\n";
+          //    // std::cout << CollidingPairs[i] << '\n';
+          //    // std::cout << "Object: " << *CollidingPairs[i];
+          // }
+         
          surface.unlock();
          
          surface.flip();

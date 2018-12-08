@@ -7,7 +7,7 @@
 class GameObject
 {
 public:
-GameObject(double x, double y, double r,  double vspeed, double hspeed, int R, int G, int B, Surface & surface)
+GameObject(int x, int y, int r,  int  vspeed, int  hspeed, int R, int G, int B, Surface & surface)
     : x_(x), y_(y),r_(r),vspeed_(vspeed), hspeed_(hspeed), R_(R), G_(G), B_(B), surface_(surface)
     {
         alive = 1;
@@ -35,22 +35,22 @@ GameObject(double x, double y, double r,  double vspeed, double hspeed, int R, i
         B_ = 255;
     }
     
-    int get_x()
+    double get_x()
     {
         return x_;
     }
 
-    int get_y()
+    double get_y()
     {
         return y_;
     }
     void draw()
     {
-        surface_.put_circle(x_, y_, r_,R_, G_, B_);
+        surface_.put_circle(x_, y_, r_, R_, G_, B_);
     }
     
 public:
-    double x_,y_,r_, vspeed_, hspeed_;
+    int x_,y_,r_, vspeed_, hspeed_;
     int R_,G_,B_;
     Surface & surface_;
     bool alive;
@@ -58,6 +58,11 @@ public:
 };
 
 
+std::ostream & operator<<(std::ostream & cout, const GameObject & object)
+{
+    cout << "x: " << object.x_ << " y:" << object.y_ << '\n';
+    return cout;
+}
 
 /* class GameObject */
 /* { */
