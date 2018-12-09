@@ -34,17 +34,6 @@ public:
     
 };
 
-/* std::vector< std::vector< GameObject* > > QuadTree::get_colliding_pairs(std::vector<GameObject * > object) */
-/* { */
-/*     for(int i = 0; i < object.size(); ++i) */
-/*     { */
-/*         insert(object[i]); */
-/*     } */
-
-    
-/*     return; */
-/* } */
-
 std::vector< GameObject* > QuadTree::get_colliding_pairs(std::vector<GameObject * > object)
 {
    
@@ -68,7 +57,7 @@ void QuadTree::CheckCollision(Node * node, std::vector<GameObject*> & collision_
      
         for(int i = 0; i < node->Objects.size(); ++i)
         {
-            for(int j = i; i < node->Objects.size(); ++i)
+            for(int j = i; j < node->Objects.size(); ++j)
             {
                 if(i != j)
                 {
@@ -102,71 +91,6 @@ void QuadTree::CheckCollision(Node * node, std::vector<GameObject*> & collision_
 }
 
 
-/* void QuadTree::MoveObjects(Node * node) */
-/* { */
-/*     // std::cout << node <<std::endl; */
-/*     if(!node->HasChildren()) */
-/*     { */
-/*         //  std::cout << node->Objects.size() << '\n'; */
-/*         for(int i=0; i < node->Objects.size(); ++i) */
-/*         { */
-/*             //           std::cout << "x: " << node->Objects[i]->x_ << '\n'; */
-/*             // std::cout << *(node->Objects[i]); */
-/*             node->Objects[i]->move(); */
-/*         } */
-     
-/*     } */
-/*     if(node->HasChildren()) */
-/*     { */
-/*         MoveObjects(node->TopLeftNode); */
-/*         MoveObjects(node->TopRightNode); */
-/*         MoveObjects(node->BottomLeftNode); */
-/*         MoveObjects(node->BottomRightNode); */
-/*     } */
-    
-/* } */
-
-/* void QuadTree::MoveObjects() */
-/* { */
-/*     std::cout << "I'm here!\n"; */
-   
-/*     MoveObjects(this->root_); */
-/* } */
-
-/* void QuadTree::DrawObjects(Node * node) */
-/* { */
-/*     if(!node->HasChildren()) */
-/*     { */
-/*          for(int i=1; i < node->Objects.size(); ++i) */
-/*          { */
-/*              /\* std::cout << node->Objects[i]; *\/ */
-/*              node->Objects[i]->draw(); */
-/*         } */
-       
-/*         /\* for (auto p = node->Objects.begin(); p != node->Objects.end(); ++p) *\/ */
-/*         /\* { *\/ */
-/*         /\*     std::cout << "I'm here!\n"; *\/ */
-/*         /\*     (*p)->draw(); *\/ */
-/*         /\* } *\/ */
-/*         /\* return; *\/ */
-/*     } */
-    
-/*     if(node->HasChildren()) */
-/*     { */
-        
-/*         DrawObjects(node->TopLeftNode); */
-/*         DrawObjects(node->TopRightNode); */
-/*         DrawObjects(node->BottomLeftNode); */
-/*         DrawObjects(node->BottomRightNode); */
-/*     } */
-    
-/* } */
-
-/* void QuadTree::DrawObjects() */
-/* { */
-/*     DrawObjects(root_); */
-/* } */
-
 void QuadTree::insert(GameObject * object)
 {
     insert(root_, object);
@@ -181,30 +105,6 @@ bool QuadTree::Collide(GameObject * object1, GameObject * object2)
     
    return(distance <= (object1->r_+object2->r_));
 }
-
-/* void QuadTree::CheckCollision(Node *node) */
-/* { */
-/*     for(int i = 0; i < node->Objects.size(); ++i) */
-/*     { */
-/*         for(int j = i; i < node->Objects.size(); ++i) */
-/*         { */
-/*             if(i != j) */
-/*             { */
-/*                 if(Collide(*(node->Objects[i]), *(node->Objects[j]))) */
-/*                 { */
-/*                     node->Objects[i]->change_color(); */
-/*                     node->Objects[j]->change_color(); */
-/*                 } */
-                
-/*             } */
-/*         }    */
-/*     } */
-    
-/*     if(!node->HasChildren()) */
-/*     { */
-/*         return; */
-/*     } */
-/* } */
 
 void QuadTree::insert(Node * node, GameObject * object)
 {
@@ -266,37 +166,8 @@ void QuadTree::insert(Node * node, GameObject * object)
         node->Objects.clear();
         
     }
-//    std::cout  << node <<std::endl;
+
 }
 
-
-/* std::ostream & operator<<(std::ostream & cout, const QuadTree * quad) */
-/* { */
-/*     cout << "------------------QuadTree------------------\n"; */
-/*     Node * currentnode = quad->root_; */
-/*     cout << "Root: " << currentnode << '\n'; */
-
-/*         if(currentnode->HasChildren()) */
-/*         { */
-/*             cout << "Current Node: " << currentnode << '\n'; */
-/*             cout << currentnode->TopLeftNode << '\n'; */
-/*             cout << currentnode->TopRightNode << '\n'; */
-/*             cout << currentnode->BottomLeftNode << '\n'; */
-/*             cout << currentnode->BottomRightNode << '\n'; */
-/*             /\* currentnode->TopLeftNode; *\/ */
-/*             /\* currentnode->TopRightNode; *\/ */
-/*             /\* currentnode->BottomLeftNode; *\/ */
-/*             /\* currentnode->BottomRightNode; *\/ */
-/*         } */
-/*         else */
-/*         { */
-/*             cout << "Current Node: " << currentnode << '\n'; */
-/*         } */
- 
-    
-/*     return cout; */
-
-    
-/* } */
 
 #endif
