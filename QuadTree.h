@@ -12,7 +12,7 @@ public:
 QuadTree()
     {
         root_ = new Node(Point(0,0), Point(640,480), NULL, 0);
-        Threshold_ = 4;
+        Threshold_ = 5;
         MaxLevel_ = 10;
         //   std::cout << root_ << '\n';
     }
@@ -52,32 +52,35 @@ std::vector< GameObject* > QuadTree::get_colliding_pairs(std::vector<GameObject 
 
 void QuadTree::CheckCollision(Node * node, std::vector<GameObject*> & collision_pairs)
 {
-         
-    for(int i = 0; i < node->Objects.size(); ++i)
+    if(!node->HasChildren())
     {
-        for(int j = i; j < node->Objects.size(); ++j)
+         
+        for(int i = 0; i < node->Objects.size(); ++i)
         {
-            if(i != j)
+            for(int j = i; j < node->Objects.size(); ++j)
             {
-                if(Collide(node->Objects[i], node->Objects[j]))
+                if(i != j)
                 {
-                    std::cout << "-------------------\n";
-                    std::cout << "Collide!!!" << '\n';
-                    std::cout << "Collision between: \n"
-                              << node->Objects[i] << " & " << node->Objects[j] << '\n'
-                              << "i:" << *(node->Objects[i]) << "Level :" << node->level_
-                              << "\nj:" << *(node->Objects[j]) << '\n';
-                    std::cout << "-------------------\n";
-                    collision_pairs.push_back(node->Objects[i]);
-                    collision_pairs.push_back(node->Objects[j]);
-                }
+                    if(Collide(node->Objects[i], node->Objects[j]))
+                    {
+                        std::cout << "-------------------\n";
+                        std::cout << "Collide!!!" << '\n';
+                        std::cout << "Collision between: \n"
+                                  << node->Objects[i] << " & " << node->Objects[j] << '\n'
+                                  << "i:" << *(node->Objects[i]) << "Level :" << node->level_
+                                  << "\nj:" << *(node->Objects[j]) << '\n';
+                        std::cout << "-------------------\n";
+                        collision_pairs.push_back(node->Objects[i]);
+                        collision_pairs.push_back(node->Objects[j]);
+                    }
                 
+                }
             }
+            
+            
         }
-            
-            
     }
-    if(node->HasChildren())
+    else
     {
         CheckCollision(node->TopLeftNode, collision_pairs);
         CheckCollision(node->TopRightNode, collision_pairs);
@@ -156,7 +159,9 @@ void QuadTree::insert(Node * node, GameObject * object)
         node->BottomRightNode = new Node(Point((node->TopLeftPoint_.x_+node->BottomRightPoint_.x_)/2,
                                                (node->TopLeftPoint_.y_+node->BottomRightPoint_.y_)/2), node->BottomRightPoint_,
                                          node , node->level_+1);        
-
+        std::cout << "---------------------------------" << '\n';
+        std::cout << "Divided!\n";
+        std::cout << "Level: " << node->level_ << '\n';
         for(int i = 0; i < node->Objects.size(); ++i)
         {
             insert(node->TopLeftNode, node->Objects[i]);
@@ -165,6 +170,10 @@ void QuadTree::insert(Node * node, GameObject * object)
             insert(node->BottomRightNode, node->Objects[i]);
             
         }
+
+        std::cout << "Node inserted: " << node->TopLeftNode->Objects.size()+node->TopRightNode->Objects.size()+ node->BottomLeftNode->Objects.size()+ node->BottomRightNode->Objects.size();
+        std::cout << "\n Node size: " << node->Objects.size() << '\n';
+        std::cout << "--------------------------------" << '\n';
         node->Objects.clear();
         
     }

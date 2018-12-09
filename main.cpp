@@ -28,15 +28,19 @@ void Draw_Quad(Node * node, Surface & surface)
     {
         return;
     }
-    std::cout << "I'm here!!" << std::endl;     
-    int x1= (node->TopLeftPoint_.x_ + node->BottomRightPoint_.x_)/2;
-    int y1= (node->TopLeftPoint_.y_ + node->BottomRightPoint_.y_)/2;
-    std::cout << "I'm here1!!" << std::endl;     
-    std::cout << x1 << " " <<  node->BottomRightPoint_.y_<< " " << x1 << " " << node->TopLeftPoint_.y_ << std::endl;
-    surface.put_line(x1, node->BottomRightPoint_.y_ -1, x1, node->TopLeftPoint_.y_, 255, 0, 0);
-    surface.put_line(node->TopLeftPoint_.x_, y1, node->BottomRightPoint_.x_-1, y1, 255, 0, 0);         
-  std::cout << "I'm here2!!" << std::endl;
-   std::cout << "I'm here2!!" << std::endl;     
+    
+    if(node->HasChildren())
+    {
+         
+  
+        int x1= (node->TopLeftPoint_.x_ + node->BottomRightPoint_.x_)/2;
+        int y1= (node->TopLeftPoint_.y_ + node->BottomRightPoint_.y_)/2;
+  
+  
+        surface.put_line(x1, node->BottomRightPoint_.y_ -1, x1, node->TopLeftPoint_.y_, 255, 0, 0);
+        surface.put_line(node->TopLeftPoint_.x_, y1, node->BottomRightPoint_.x_-1, y1, 255, 0, 0);         
+ 
+    }
 
    
     if(node->HasChildren())
@@ -46,14 +50,13 @@ void Draw_Quad(Node * node, Surface & surface)
         Draw_Quad(node->BottomLeftNode, surface);
         Draw_Quad(node->BottomRightNode, surface);
     }
-        
-        
 
-    if(!(node->HasChildren()))
+    if(!node->HasChildren())
     {
         return;
     }
-              
+        
+     
 }
 
 void Game()
@@ -64,12 +67,20 @@ void Game()
     Surface surface;
 
 
-    std::vector<GameObject *> object;
-    for(int i = 0; i < NUM_OBJECT; ++i)
-    {
-        object.push_back(new GameObject(rand() % W, rand() % H, 5, rand() % 8 + 2, rand() % 8 + 2, 255, 0, 0, surface));
-    }
-
+    std::vector<GameObject *> object; // 
+    // for(int i = 0; i < NUM_OBJECT; ++i)
+    // {
+    //     object.push_back(new GameObject(rand() % W, rand() % H, 5, // rand() % 8 + 2, rand() % 8 + 2
+    //                                     2,2
+    //                                     , 255, 0, 0, surface));
+    // }
+    object.push_back(new GameObject(10,10, 5, 0,0, 255, 0, 0, surface));
+    object.push_back(new GameObject(20,45, 5, 0,0, 255, 0, 0, surface));
+    object.push_back(new GameObject(20,30, 5, 0,0, 255, 0, 0, surface));
+    object.push_back(new GameObject(30,20, 5, 0,0, 255, 0, 0, surface));
+    object.push_back(new GameObject(30,55, 5, 0,0, 255, 0, 0, surface));
+    object.push_back(new GameObject(30,35, 5, 0,0, 255, 0, 0, surface));
+    
 
         
 
@@ -138,9 +149,8 @@ void Game()
             // std::cout << object[i] << '\n';
             // std::cout << "Object: " << *object[i];
         }
-        std::cout << "I'm working!!!" << std::endl;
+       
         Draw_Quad(qtree.root_, surface);
-           std::cout << "I'm working!!!" << std::endl;
         // for(int i = 0; i < CollidingPairs.size(); ++i)
         // {
         //     CollidingPairs[i]->draw();
