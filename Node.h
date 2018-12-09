@@ -36,10 +36,10 @@ Node(Point TopLeftPoint, Point BottomRightPoint, Node * parent, int level)
         /*        && object->get_y() >= TopLeftPoint_.y_ */
         /*        && object->get_y() <= BottomRightPoint_.y_ */
         /*     ) << '\n'; */
-        return(object->get_x() <= BottomRightPoint_.x_
-               && object->get_x() >= TopLeftPoint_.x_
-               && object->get_y() >= TopLeftPoint_.y_
-               && object->get_y() <= BottomRightPoint_.y_
+        return((object->get_x())-object->r_ <= BottomRightPoint_.x_
+               && object->get_x()+object->r_ >= TopLeftPoint_.x_
+               && object->get_y()+object->r_ >= TopLeftPoint_.y_
+               && object->get_y()-object->r_ <= BottomRightPoint_.y_
             );
     }
     
@@ -91,6 +91,7 @@ public:
     Node * BottomRightNode;
     int level_;
     std::vector<GameObject *> Objects;
+    std::vector<GameObject *> RemainingObjects;
 };
 
 
