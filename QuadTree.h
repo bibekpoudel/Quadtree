@@ -170,8 +170,11 @@ void QuadTree::insert(Node * node, std::vector<GameObject *> object)
 
 
         insert(node->TopLeftNode, node->Objects);
+        
         insert(node->TopRightNode, node->Objects);
+
         insert(node->BottomLeftNode,node->Objects);
+
         insert(node->BottomRightNode, node->Objects);
         
         std::cout << "Node inserted: " << node->TopLeftNode->Objects.size()+node->TopRightNode->Objects.size()+ node->BottomLeftNode->Objects.size()+ node->BottomRightNode->Objects.size();
