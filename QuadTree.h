@@ -21,8 +21,8 @@ QuadTree()
         delete root_;
     }
     
-    void insert(GameObject*);
-    void insert(Node * , GameObject * );
+    void insert(std::vector<GameObject*>);
+    void insert(Node * , std::vector<GameObject *> );
     void CheckCollision(Node * ,std::vector<GameObject*> &);
     bool Collide(GameObject * , GameObject *);
     std::vector< GameObject* > get_colliding_pairs(std::vector<GameObject * > );
@@ -39,10 +39,8 @@ std::vector< GameObject* > QuadTree::get_colliding_pairs(std::vector<GameObject 
    
     std::vector<GameObject* > collision_pairs;
     
-    for(int i = 0; i < object.size(); ++i)
-    {
-        insert(object[i]);
-    }
+    insert(object);
+    
     CheckCollision(root_, collision_pairs);
     
     // std::cout << "Size: " << collision_pairs.size() << '\n';
@@ -95,7 +93,7 @@ void QuadTree::CheckCollision(Node * node, std::vector<GameObject*> & collision_
 
 
 
-void QuadTree::insert(GameObject * object)
+void QuadTree::insert(std::vector<GameObject *> object)
 {
     insert(root_, object);
 }
@@ -110,7 +108,7 @@ bool QuadTree::Collide(GameObject * object1, GameObject * object2)
    return(distance <= (object1->r_+object2->r_));
 }
 
-void QuadTree::insert(Node * node, GameObject * object)
+void QuadTree::insert(Node * node, std::vector<GameObject *> object)
 {
 
    
@@ -120,28 +118,35 @@ void QuadTree::insert(Node * node, GameObject * object)
     }
    
 //---------------------------------------
-    if(!node->InBound(object))//Checks if the node is in boundary else returns
-    {
-        return;
-    }
+   
    
     if(node->level_ == MaxLevel_+1)
     {
+        
         return;
     }
 
     //   std::cout << *object << '\n';
-    node->Objects.push_back(object);
+    for(int i = 0; i < object.size(); ++i)
+    {
+        if(node->InBound(object[i]))//Checks if the node is in boundary else returns
+        {
+            node->Objects.push_back(object[i]);
+            
+        }
+       
+    }
     // std::cout << *node->Objects.back() << '\n';
   
 //---------------------------------------
     //Insert all game objects into a vector in a Quad Tree
 
-     /* std::cout << "Node: " << node << '\n'; */
-     /* std::cout << "Level: " << node->level_ << '\n'; */
-     /* std::cout << "Top Left Point: " << node->TopLeftPoint_.x_ << '\n'; */
-     /* std::cout << "Bottom Right Point: " << node->BottomRightPoint_.x_ << '\n'; */
-     /* std::cout << "________________________________________\n"; */
+     std::cout << "Node: " << node << '\n';
+     std::cout << "Level: " << node->level_ << '\n';
+     std::cout << "Top Left Point: " << node->TopLeftPoint_.x_ << '\n';
+     std::cout << "Bottom Right Point: " << node->BottomRightPoint_.x_ << '\n';
+     std::cout << node->NumOfObjects() << '\n';
+     std::cout << "________________________________________\n";
     if((node->NumOfObjects()) > Threshold_)
     {
         node->TopLeftNode = new Node(node->TopLeftPoint_,
@@ -162,15 +167,13 @@ void QuadTree::insert(Node * node, GameObject * object)
         std::cout << "---------------------------------" << '\n';
         std::cout << "Divided!\n";
         std::cout << "Level: " << node->level_ << '\n';
-        for(int i = 0; i < node->Objects.size(); ++i)
-        {
-            insert(node->TopLeftNode, node->Objects[i]);
-            insert(node->TopRightNode, node->Objects[i]);
-            insert(node->BottomLeftNode,node->Objects[i]);
-            insert(node->BottomRightNode, node->Objects[i]);
-            
-        }
 
+
+        insert(node->TopLeftNode, node->Objects);
+        insert(node->TopRightNode, node->Objects);
+        insert(node->BottomLeftNode,node->Objects);
+        insert(node->BottomRightNode, node->Objects);
+        
         std::cout << "Node inserted: " << node->TopLeftNode->Objects.size()+node->TopRightNode->Objects.size()+ node->BottomLeftNode->Objects.size()+ node->BottomRightNode->Objects.size();
         std::cout << "\n Node size: " << node->Objects.size() << '\n';
         std::cout << "--------------------------------" << '\n';

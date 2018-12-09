@@ -40,18 +40,12 @@ void Draw_Quad(Node * node, Surface & surface)
         surface.put_line(x1, node->BottomRightPoint_.y_ -1, x1, node->TopLeftPoint_.y_, 255, 0, 0);
         surface.put_line(node->TopLeftPoint_.x_, y1, node->BottomRightPoint_.x_-1, y1, 255, 0, 0);         
  
-    }
-
-   
-    if(node->HasChildren())
-    {
         Draw_Quad(node->TopLeftNode, surface);
         Draw_Quad(node->TopRightNode, surface);
         Draw_Quad(node->BottomLeftNode, surface);
         Draw_Quad(node->BottomRightNode, surface);
     }
-
-    if(!node->HasChildren())
+    else
     {
         return;
     }
@@ -68,18 +62,25 @@ void Game()
 
 
     std::vector<GameObject *> object; // 
-    // for(int i = 0; i < NUM_OBJECT; ++i)
+    for(int i = 0; i < NUM_OBJECT; ++i)
+    {
+        object.push_back(new GameObject(rand() % W, rand() % H, 5, // rand() % 8 + 2, rand() % 8 + 2
+                                        2,2
+                                        , 255, 0, 0, surface));
+    }
+
+    // for(int i = 1; i < 30; ++i)
     // {
-    //     object.push_back(new GameObject(rand() % W, rand() % H, 5, // rand() % 8 + 2, rand() % 8 + 2
-    //                                     2,2
-    //                                     , 255, 0, 0, surface));
+    //     object.push_back(new GameObject(i * 6,i * 4, 2, 0,0, 255, 0, 0, surface));
+   
     // }
-    object.push_back(new GameObject(10,10, 5, 0,0, 255, 0, 0, surface));
-    object.push_back(new GameObject(20,45, 5, 0,0, 255, 0, 0, surface));
-    object.push_back(new GameObject(20,30, 5, 0,0, 255, 0, 0, surface));
-    object.push_back(new GameObject(30,20, 5, 0,0, 255, 0, 0, surface));
-    object.push_back(new GameObject(30,55, 5, 0,0, 255, 0, 0, surface));
-    object.push_back(new GameObject(30,35, 5, 0,0, 255, 0, 0, surface));
+    // object.push_back(new GameObject(10,10, 5, 0,0, 255, 0, 0, surface));
+    // object.push_back(new GameObject(20,45, 5, 0,0, 255, 0, 0, surface));
+    // object.push_back(new GameObject(20,30, 5, 0,0, 255, 0, 0, surface));
+    // object.push_back(new GameObject(30,20, 5, 0,0, 255, 0, 0, surface));
+    // object.push_back(new GameObject(30,55, 5, 0,0, 255, 0, 0, surface));
+    // object.push_back(new GameObject(45,55, 5, 0,0, 255, 0, 0, surface));
+    // object.push_back(new GameObject(400,35, 5, 0,0, 255, 0, 0, surface));
     
 
         
@@ -164,7 +165,8 @@ void Game()
          
         surface.flip();
          
-        delay(25);
+        delay(20);
+   
     }
 }
 
