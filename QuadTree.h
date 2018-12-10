@@ -61,13 +61,13 @@ void QuadTree::CheckCollision(Node * node, std::vector<GameObject*> & collision_
                 {
                     if(Collide(node->Objects[i], node->Objects[j]))
                     {
-                        std::cout << "-------------------\n";
-                        std::cout << "Collide!!!" << '\n';
-                        std::cout << "Collision between: \n"
-                                  << node->Objects[i] << " & " << node->Objects[j] << '\n'
-                                  << "i:" << *(node->Objects[i]) << "Level :" << node->level_
-                                  << "\nj:" << *(node->Objects[j]) << '\n';
-                        std::cout << "-------------------\n";
+                        /* std::cout << "-------------------\n"; */
+                        /* std::cout << "Collide!!!" << '\n'; */
+                        /* std::cout << "Collision between: \n" */
+                        /*           << node->Objects[i] << " & " << node->Objects[j] << '\n' */
+                        /*           << "i:" << *(node->Objects[i]) << "Level :" << node->level_ */
+                        /*           << "\nj:" << *(node->Objects[j]) << '\n'; */
+                        /* std::cout << "-------------------\n"; */
                         collision_pairs.push_back(node->Objects[i]);
                         collision_pairs.push_back(node->Objects[j]);
                     }
@@ -100,12 +100,12 @@ void QuadTree::insert(std::vector<GameObject *> object)
 
 bool QuadTree::Collide(GameObject * object1, GameObject * object2)
 {
-    int dx = object1->x_- object2->x_;
-    int dy = object1->y_- object2->y_;
+    double dx = object1->x_- object2->x_;
+    double dy = object1->y_- object2->y_;
 
-   int  distance = pow((dx * dx + dy * dy), 0.5);
-    
-   return(distance <= (object1->r_+object2->r_));
+    double  distance = pow((dx * dx + dy * dy), 0.5);
+   
+   return(distance <= (2*object1->r_));
 }
 
 void QuadTree::insert(Node * node, std::vector<GameObject *> object)
@@ -141,12 +141,12 @@ void QuadTree::insert(Node * node, std::vector<GameObject *> object)
 //---------------------------------------
     //Insert all game objects into a vector in a Quad Tree
 
-     std::cout << "Node: " << node << '\n';
-     std::cout << "Level: " << node->level_ << '\n';
-     std::cout << "Top Left Point: " << node->TopLeftPoint_.x_ << '\n';
-     std::cout << "Bottom Right Point: " << node->BottomRightPoint_.x_ << '\n';
-     std::cout << node->NumOfObjects() << '\n';
-     std::cout << "________________________________________\n";
+     /* std::cout << "Node: " << node << '\n'; */
+     /* std::cout << "Level: " << node->level_ << '\n'; */
+     /* std::cout << "Top Left Point: " << node->TopLeftPoint_.x_ << '\n'; */
+     /* std::cout << "Bottom Right Point: " << node->BottomRightPoint_.x_ << '\n'; */
+     /* std::cout << node->NumOfObjects() << '\n'; */
+     /* std::cout << "________________________________________\n"; */
     if((node->NumOfObjects()) > Threshold_)
     {
         node->TopLeftNode = new Node(node->TopLeftPoint_,
@@ -164,9 +164,9 @@ void QuadTree::insert(Node * node, std::vector<GameObject *> object)
         node->BottomRightNode = new Node(Point((node->TopLeftPoint_.x_+node->BottomRightPoint_.x_)/2,
                                                (node->TopLeftPoint_.y_+node->BottomRightPoint_.y_)/2), node->BottomRightPoint_,
                                          node , node->level_+1);        
-        std::cout << "---------------------------------" << '\n';
-        std::cout << "Divided!\n";
-        std::cout << "Level: " << node->level_ << '\n';
+        /* std::cout << "---------------------------------" << '\n'; */
+        /* std::cout << "Divided!\n"; */
+        /* std::cout << "Level: " << node->level_ << '\n'; */
 
 
         insert(node->TopLeftNode, node->Objects);
@@ -177,9 +177,9 @@ void QuadTree::insert(Node * node, std::vector<GameObject *> object)
 
         insert(node->BottomRightNode, node->Objects);
         
-        std::cout << "Node inserted: " << node->TopLeftNode->Objects.size()+node->TopRightNode->Objects.size()+ node->BottomLeftNode->Objects.size()+ node->BottomRightNode->Objects.size();
-        std::cout << "\n Node size: " << node->Objects.size() << '\n';
-        std::cout << "--------------------------------" << '\n';
+        /* std::cout << "Node inserted: " << node->TopLeftNode->Objects.size()+node->TopRightNode->Objects.size()+ node->BottomLeftNode->Objects.size()+ node->BottomRightNode->Objects.size(); */
+        /* std::cout << "\n Node size: " << node->Objects.size() << '\n'; */
+        /* std::cout << "--------------------------------" << '\n'; */
         node->Objects.clear();
         
     }

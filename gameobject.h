@@ -28,6 +28,12 @@ GameObject(int x, int y, int r,  int  vspeed, int  hspeed, int R, int G, int B, 
         }
     }
 
+    void change_speed()
+    {
+        vspeed_ = -vspeed_;
+        hspeed_ = -hspeed_;
+    }
+
     void change_color()
     {
         R_ = 0;
@@ -39,6 +45,8 @@ GameObject(int x, int y, int r,  int  vspeed, int  hspeed, int R, int G, int B, 
     {
         return x_;
     }
+
+    
 
     double get_y()
     {
@@ -63,28 +71,6 @@ std::ostream & operator<<(std::ostream & cout, const GameObject & object)
     cout << "x: " << object.x_ << " y:" << object.y_ << '\n';
     return cout;
 }
-
-/* class GameObject */
-/* { */
-/* public: */
-/* GameObject(Point Coordinates, Surface & surface) */
-/*     :Coordinates_(Coordinates), surface_(surface) */
-/*     { */
-/*         body_rect.x=Coordinates_.x_; */
-/*         body_rect.y=Coordinates_.y_; */
-        
-/*     } */
-/*     void draw() */
-/*     { */
-/*         surface_.put_rect(Coordinaes_.x_, Coordinates_.y_, w_, h_, R_, G_, B_); */
-/*     } */
-    
-/* private: */
-/*     Point Coordinates_; */
-/*     Rect body_rect; */
-/*     Surface surface_; */
-    
-/* }; */
 
 
 #endif
