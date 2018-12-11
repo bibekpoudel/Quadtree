@@ -59,55 +59,23 @@ void Game()
     
     
     srand((unsigned int) time(NULL));
-    const int NUM_OBJECT = 100;
+    const int NUM_OBJECT = 10;
     Event event;
     Surface surface;
 
-    
+    Music music("sounds/pop.wav");
 
 
     std::vector<GameObject *> object; // 
     for(int i = 0; i < NUM_OBJECT; ++i)
     {
-        object.push_back(new GameObject(rand() % W, rand() % H, 3, rand() % 3 + 2, rand() % 3+ 2
+        object.push_back(new GameObject(rand() % W, rand() % H, 2, rand() % 3 + 2, rand() % 3+ 2
                                         , 255, 0, 0, surface));
     }
     
  
 
-    // for(int i = 1; i < 30; ++i)
-    // {
-    //     object.push_back(new GameObject(i * 6,i * 4, 2, 0,0, 255, 0, 0, surface));
-   
-    // }
-    // object.push_back(new GameObject(10,10, 5, 0,0, 255, 0, 0, surface));
-    // object.push_back(new GameObject(20,45, 5, 0,0, 255, 0, 0, surface));
-    // object.push_back(new GameObject(20,30, 5, 0,0, 255, 0, 0, surface));
-    // object.push_back(new GameObject(30,20, 5, 0,0, 255, 0, 0, surface));
-    // object.push_back(new GameObject(30,55, 5, 0,0, 255, 0, 0, surface));
-    // object.push_back(new GameObject(45,55, 5, 0,0, 255, 0, 0, surface));
-    // object.push_back(new GameObject(400,35, 5, 0,0, 255, 0, 0, surface));
-    
-
-        
-
-   
-    // std::vector< std::vector< GameObject* > > CollidingPairs = qtree.get_colliding_pairs(object);
-
-  
-   
-// std::cout << root << '\n';
-    // // std::vector<GameObject> object;
-    // // for(int i = 0; i < 50; ++i)
-    // // {
-    // //     object.push_back();
-    // // }
-    
-    // for(int i = 0; i < NUM_OBJECT; ++i)
-    // {
-    //     Quad.insert(GameObject(rand() % W, rand() % H, 2, rand() % 8 + 2, rand() % 8 + 2, 255, 0, 0, surface));
-    // }
-
+    music.play();
 
     bool draw_lines = true;
 
@@ -136,6 +104,15 @@ void Game()
                     
                 }
             }
+     
+                if(mouse_left())
+                {
+                    //  std::cout << mouse_x() << ' ' << mouse_y() << '\n';
+                    object.push_back(new GameObject(mouse_x(), mouse_y(), 2, rand() % 3 + 2, rand() % 3+ 2
+                                                    , 255, 0, 0, surface));
+                }
+          
+            
            
         }
 
